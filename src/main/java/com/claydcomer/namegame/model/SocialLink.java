@@ -1,5 +1,8 @@
 package com.claydcomer.namegame.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SocialLink {
 
     private String callToAction;

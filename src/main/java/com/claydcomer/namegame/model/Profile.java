@@ -1,7 +1,10 @@
 package com.claydcomer.namegame.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Profile {
 
     private String bio;
