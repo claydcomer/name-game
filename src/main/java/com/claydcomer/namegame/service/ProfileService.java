@@ -28,7 +28,6 @@ public class ProfileService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(converter);
 
-
         ResponseEntity<List<Profile>> response = restTemplate.exchange(
                 profileUrl,
                 HttpMethod.GET,
