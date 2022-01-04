@@ -1,0 +1,24 @@
+openapi: "3.0.2"
+info:
+  title: Name Game API
+  version: "1.0"
+servers:
+  - url: http://localhost:8080/v1.0/
+paths:
+  /start:
+    post:
+      responses:
+        '200':
+          description: OK
+  /guess:
+    put:
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Guess
+  /score:
+    get:
+      responses:
+        '200':
+          description: OK
