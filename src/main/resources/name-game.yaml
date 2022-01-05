@@ -22,3 +22,32 @@ paths:
       responses:
         '200':
           description: OK
+components:
+  schemas:
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        headshotId:
+          type: integer
+          format: int64
+        teammates:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeadShot'
+    HeadShot:
+      type: object
+      properties:
+        id:
+          type: string
+        alt:
+          type: string
+        mimeType:
+          type: string
+        url:
+          type: string
