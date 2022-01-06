@@ -25,3 +25,6 @@ hs_err_pid*
 
 # Intellij files
 *.idea
+
+#DB Files
+*.db

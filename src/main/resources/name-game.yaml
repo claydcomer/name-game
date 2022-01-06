@@ -30,16 +30,23 @@ components:
         id:
           type: integer
           format: int64
+        gameType:
+          type: string
         score:
           type: integer
           format: int64
-        headshotId:
+        guessId:
           type: integer
           format: int64
-        teammates:
+        tileIds:
           type: array
           items:
             $ref: '#/components/schemas/HeadShot'
+        gameOver:
+          type: boolean
+        endTime:
+          type: string
+          format: date-time
     HeadShot:
       type: object
       properties:
