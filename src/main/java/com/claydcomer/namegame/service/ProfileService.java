@@ -10,10 +10,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,20 +35,40 @@ public class ProfileService {
         return response.getBody();
     }
 
-    public Set<Profile> pickSixNewProfiles(Set<Integer> previousProfileIds) {
-        Set<Profile> profileSet = new HashSet<>();
+    public Profile getProfileById(String id) {
+        List<Profile> profiles = getProfiles();
 
-        //Get list of values that do not contain previously selected ids
-
-        //Shuffle the list
-
-        //Select the first 6 items from the shuffled list
-
-        //Build and return hashset
-        return new HashSet<>();
+        return profiles.stream()
+                .filter(p -> Objects.equals(p.getId(), id))
+                .findFirst()
+                .orElse(null);
     }
 
-    public Set<String> getIdsFromProfiles(Set<Profile> profileSet) {
-        return profileSet.stream().map(Profile::getId).collect(Collectors.toSet());
+    public List<Profile> pickSixNewProfiles() {
+        return pickSixNewProfiles(null);
+    }
+
+    public List<Profile> pickSixNewProfiles(List<String> previousProfileIds) {
+        List<Profile> profiles = getProfiles();
+        List<Profile> filteredProfiles = new ArrayList<>();
+
+        //Get list of values that do not contain previously selected ids
+        if(previousProfileIds != null) {
+            filteredProfiles.addAll(profiles.stream()
+                    .filter(p -> !previousProfileIds.contains(p.getId()))
+                    .collect(Collectors.toSet()));
+        } else {
+            filteredProfiles.addAll(profiles);
+        }
+
+        //Shuffle the list
+        Collections.shuffle(filteredProfiles);
+
+        //Select the first 6 items from the shuffled list and return
+        return filteredProfiles.subList(0, 6);
+    }
+
+    public List<String> getIdsFromProfiles(List<Profile> profileSet) {
+        return profileSet.stream().map(Profile::getId).collect(Collectors.toList());
     }
 }
