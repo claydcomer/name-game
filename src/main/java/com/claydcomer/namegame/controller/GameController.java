@@ -21,8 +21,8 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @PostMapping("/start-game")
-    public ResponseEntity<Game> startGame(@RequestParam("game-type") String gameType) {
+    @PostMapping("/start")
+    public ResponseEntity<Game> startGame(@RequestParam("type") String gameType) {
         Game game = gameService.startGame(gameType);
 
         return new ResponseEntity<>(game, HttpStatus.CREATED);

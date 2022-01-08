@@ -5,48 +5,167 @@ info:
 servers:
   - url: http://localhost:8080/v1.0/
 paths:
-  /start:
+  /game/start:
     post:
+      parameters:
+        - in: path
+          name: type
+          schema:
+            type: string
+          required: true
+          description: Type of game to create, valid options are timed or practice
       responses:
         '200':
           description: OK
-  /guess:
-    put:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /game/guess:
+    get:
+      parameters:
+        - in: path
+          name: guessId
+          schema:
+            type: string
+          required: true
+          description: Id of the headshot selected by the user to match the profile name
       responses:
         '200':
           description: OK
         '400':
-          description: Bad Guess
-  /score:
-    get:
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /game/new-round:
+    post:
+      parameters:
+        - in: path
+          name: game-id
+          schema:
+            type: string
+          required: true
+          description: Game identifier
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /score:
+    get:
+      parameters:
+        - in: path
+          name: gameId
+          schema:
+            type: string
+          required: true
+          description: Retrieves the score of the game ID provided
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /profiles:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Retrieves the profile of the ID provided
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Profile'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '500':
+            $ref: '#/components/responses/InternalError'
 components:
+  responses:
+    BadRequest:
+      description: Unable to perform request
+      schema:
+        $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
+      schema:
+        $ref: '#/components/schemas/Error'
+    InternalError:
+      description: An unexpected error occured
+      schema:
+        $ref: '#/components/schemas/Error'
   schemas:
     Game:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
         gameType:
           type: string
         score:
           type: integer
-          format: int64
+          format: int32
         guessId:
-          type: integer
-          format: int64
+          type: string
         tileIds:
           type: array
           items:
-            $ref: '#/components/schemas/HeadShot'
+            type: string
         gameOver:
           type: boolean
         endTime:
+          type: integer
+          format: int64
+    Profile:
+      type: object
+      properties:
+        id:
           type: string
-          format: date-time
+        bio:
+          type: string
+        firstName:
+          type: string
+        headshot:
+          $ref: '#/components/schemas/HeadShot'
+        jobTitle:
+          type: string
+        lastName:
+          type: string
+        slug:
+          type: string
+        socialLinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialLink'
+        type:
+          type: string
     HeadShot:
       type: object
       properties:
@@ -58,3 +177,19 @@ components:
           type: string
         url:
           type: string
+    SocialLink:
+      type: object
+      properties:
+        callToAction:
+          type: string
+        type:
+          type: string
+        url:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message

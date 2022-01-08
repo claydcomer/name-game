@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Headshot {
 
+    private String id;
+
     private String alt;
 
     private Integer height;
-
-    private String id;
 
     private String mimeType;
 
@@ -18,6 +18,14 @@ public class Headshot {
     private String url;
 
     private Integer width;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getAlt() {
         return alt;
@@ -33,14 +41,6 @@ public class Headshot {
 
     public void setHeight(Integer height) {
         this.height = height;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getMimeType() {

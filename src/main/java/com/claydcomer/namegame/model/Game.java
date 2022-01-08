@@ -16,7 +16,7 @@ public class Game {
 
     private Integer score;
 
-    private String guessId;
+    private String profileId;
 
     private List<String> tileIds;
 
@@ -54,13 +54,13 @@ public class Game {
         this.score = score;
     }
 
-    @DynamoDBAttribute(attributeName = "guess_id")
-    public String getGuessId() {
-        return guessId;
+    @DynamoDBAttribute(attributeName = "profile_id")
+    public String getProfileId() {
+        return profileId;
     }
 
-    public void setGuessId(String guessId) {
-        this.guessId = guessId;
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
     }
 
     @DynamoDBAttribute(attributeName = "tile_ids")

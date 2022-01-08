@@ -31,10 +31,10 @@ public class GameService {
         //Build game object
         List<String> profileIds = profileService.getIdsFromProfiles(profiles);
         Random rand = new Random();
-        Integer randomIndex = rand.nextInt(profileIds.size());
+        int randomIndex = rand.nextInt(profileIds.size());
 
         game.setGameType(gameType);
-        game.setGuessId(profileIds.get(randomIndex));
+        game.setProfileId(profileIds.get(randomIndex));
         game.setTileIds(profileIds);
         game.setScore(0);
         game.setGameOver(false);

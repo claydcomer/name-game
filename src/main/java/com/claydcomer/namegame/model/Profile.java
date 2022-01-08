@@ -7,13 +7,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Profile {
 
+    private String id;
+
     private String bio;
 
     private String firstName;
 
     private Headshot headshot;
-
-    private String id;
 
     private String jobTitle;
 
@@ -24,6 +24,14 @@ public class Profile {
     private List<SocialLink> socialLinks;
 
     private String type;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getBio() {
         return bio;
@@ -47,14 +55,6 @@ public class Profile {
 
     public void setHeadshot(Headshot headshot) {
         this.headshot = headshot;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getJobTitle() {
