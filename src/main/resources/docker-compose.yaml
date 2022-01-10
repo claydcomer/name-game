@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   dynamodb:
-    image:  amazon/dynamodb-local
-    container_name: name-game-dynamodb
+    image:  amazon/dynamodb-local:latest
+    container_name: dynamodb-local
     hostname: dynamodb
     restart: always
     volumes:
@@ -10,3 +10,15 @@ services:
     ports:
       - 8000:8000
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/"
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - 8001:8001
+    environment:
+      DYNAMO_ENDPOINT: "http://dynamodb-local:8000"
+      AWS_REGION: "us-east-1"
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+    depends_on:
+      - dynamodb-local
